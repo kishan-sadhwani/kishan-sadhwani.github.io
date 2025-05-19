@@ -189,15 +189,10 @@
         const actions = document.createElement('div');
         actions.className = 'booking-actions';
 
-        const editBtn = document.createElement('button');
-        editBtn.textContent = 'Edit';
-        editBtn.onclick = () => editSeat(booking.date);
-
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
         deleteBtn.onclick = () => deleteSeat(booking.date);
 
-        actions.appendChild(editBtn);
         actions.appendChild(deleteBtn);
 
         li.appendChild(dateSpan);
