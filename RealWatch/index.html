@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Watch - Track Your Watchlist</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Real Watch</h1>
+            <p class="subtitle">Never forget what to watch next</p>
+        </header>
+
+        <section class="add-section">
+            <div class="form-group">
+                <div class="input-row">
+                    <input type="text" id="titleInput" placeholder="Enter title (e.g. Inception)" required>
+                    <select id="typeSelect">
+                        <option value="Movie">Movie</option>
+                        <option value="TV Show">TV Show</option>
+                        <option value="Anime">Anime</option>
+                        <option value="YouTube">YouTube</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <textarea id="noteInput" placeholder="Add a note (optional)..." rows="2"></textarea>
+                <button id="addBtn" class="primary-btn">Add to Watchlist</button>
+            </div>
+        </section>
+
+        <section class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search your list...">
+            </div>
+            <div class="filter-chips" id="filterChips">
+                <button class="chip active" data-filter="all">All</button>
+                <button class="chip" data-filter="Movie">Movies</button>
+                <button class="chip" data-filter="TV Show">TV Shows</button>
+                <button class="chip" data-filter="Anime">Anime</button>
+                <button class="chip" data-filter="unwatched">Unwatched</button>
+                <button class="chip" data-filter="watched">Watched</button>
+            </div>
+        </section>
+
+        <main>
+            <div id="watchlist" class="list-container">
+                <!-- Unwatched items will appear here -->
+            </div>
+
+            <section class="watched-section">
+                <div class="collapsible-header" id="watchedHeader">
+                    <h2>Watched Items (<span id="watchedCount">0</span>)</h2>
+                    <span id="toggleIcon">▼</span>
+                </div>
+                <div id="watchedList" class="collapsible-content">
+                    <!-- Watched items will appear here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
