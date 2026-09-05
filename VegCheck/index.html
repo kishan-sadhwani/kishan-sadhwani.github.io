@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VegCheck - Barcode Vegan & Vegetarian Product Scanner</title>
+    <meta name="description" content="Instantly scan or lookup food barcodes to check if a product is Vegan, Vegetarian, Eggetarian, or Non-Vegetarian." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- HTML5 QR Code & Barcode Scanner Library CDN -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+    <!-- App Styles -->
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation Header -->
+        <header class="app-header">
+            <div class="logo-group">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div>
+                    <h1 class="app-title">Veg<span>Check</span></h1>
+                    <p class="app-subtitle">Barcode Diet & Ingredient Analyzer</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Action / Scanner Card -->
+            <section class="scanner-card">
+                <div class="tabs-header">
+                    <button class="tab-btn active" id="tabLiveBtn">
+                        <i class="fa-solid fa-camera"></i> Live Camera
+                    </button>
+                    <button class="tab-btn" id="tabUploadBtn">
+                        <i class="fa-solid fa-image"></i> Upload Image
+                    </button>
+                    <button class="tab-btn" id="tabManualBtn">
+                        <i class="fa-solid fa-keyboard"></i> Barcode Search
+                    </button>
+                </div>
+
+                <!-- Tab 1: Live Camera Scanner -->
+                <div class="tab-content active" id="tabLive">
+                    <div class="camera-wrapper">
+                        <div id="camera-reader"></div>
+                        <div class="camera-overlay" id="cameraOverlay">
+                            <div class="scan-laser"></div>
+                            <div class="reticle">
+                                <span class="corner tl"></span>
+                                <span class="corner tr"></span>
+                                <span class="corner bl"></span>
+                                <span class="corner br"></span>
+                            </div>
+                            <p class="overlay-text">Point camera at product barcode</p>
+                        </div>
+                    </div>
+                    <div class="camera-controls">
+                        <button class="btn btn-primary" id="startCamBtn">
+                            <i class="fa-solid fa-play"></i> Start Camera
+                        </button>
+                        <button class="btn btn-secondary" id="stopCamBtn" style="display: none;">
+                            <i class="fa-solid fa-stop"></i> Stop Camera
+                        </button>
+                        <button class="btn btn-icon" id="switchCamBtn" title="Switch Camera" style="display: none;">
+                            <i class="fa-solid fa-camera-rotate"></i>
+                        </button>
+                        <button class="btn btn-icon" id="torchBtn" title="Toggle Flashlight" style="display: none;">
+                            <i class="fa-solid fa-bolt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Upload Image -->
+                <div class="tab-content" id="tabUpload">
+                    <div class="upload-dropzone" id="dropzone">
+                        <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+                        <h3>Drag & drop a barcode photo</h3>
+                        <p>Supports JPG, PNG, WEBP barcodes</p>
+                        <label class="btn btn-primary file-btn">
+                            <i class="fa-solid fa-folder-open"></i> Browse Picture
+                            <input type="file" id="fileInput" accept="image/*" />
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Manual Search -->
+                <div class="tab-content" id="tabManual">
+                    <form class="search-form" id="searchForm">
+                        <div class="search-input-wrap">
+                            <i class="fa-solid fa-barcode"></i>
+                            <input type="text" id="barcodeInput" placeholder="Enter EAN/UPC barcode (e.g. 8901030383709)" autocomplete="off" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-magnifying-glass"></i> Check
+                        </button>
+                    </form>
+                    <div class="quick-samples">
+                        <span>Try Sample Barcodes:</span>
+                        <div class="sample-chips">
+                            <button type="button" class="chip" data-code="8901030383709">Parle-G (Veg)</button>
+                            <button type="button" class="chip" data-code="8901725181222">Maggi 2-Min (Veg)</button>
+                            <button type="button" class="chip" data-code="5449000000996">Coca-Cola (Vegan)</button>
+                            <button type="button" class="chip" data-code="7622201726058">Oreo Cookies (Vegan)</button>
+                            <button type="button" class="chip" data-code="8480000100726">Marshmallows (Gelatin/Non-Veg)</button>
+                            <button type="button" class="chip" data-code="8901491101836">Lay's Chips (Veg)</button>
+                            <button type="button" class="chip" data-code="8901262010015">Amul Butter (Dairy/Veg)</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading Spinner State -->
+            <div class="status-card loading-card" id="loadingState" style="display: none;">
+                <div class="loader-spinner"></div>
+                <h3>Fetching Product Details...</h3>
+                <p>Analyzing ingredients against vegan & vegetarian databases</p>
+            </div>
+
+            <!-- Error State -->
+            <div class="status-card error-card" id="errorState" style="display: none;">
+                <div class="error-icon">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                </div>
+                <h3 id="errorTitle">Product Not Found</h3>
+                <p id="errorMsg">We couldn't retrieve information for this barcode.</p>
+                <div class="error-actions">
+                    <button class="btn btn-secondary" id="retryBtn">Try Another Barcode</button>
+                </div>
+            </div>
+
+            <!-- Product Result Card -->
+            <section class="result-card" id="resultCard" style="display: none;">
+                <!-- Result Header / Verdict Banner -->
+                <div class="verdict-banner" id="verdictBanner">
+                    <div class="verdict-symbol" id="verdictSymbol">
+                        <!-- Indian Dot Icon or Vegan Leaf -->
+                    </div>
+                    <div class="verdict-details">
+                        <span class="verdict-tag" id="verdictTag">VERDICT</span>
+                        <h2 class="verdict-title" id="verdictTitle">100% Vegan</h2>
+                        <p class="verdict-desc" id="verdictDesc">No animal-derived products, dairy, egg, or meat detected.</p>
+                    </div>
+                </div>
+
+                <!-- Product Bio Grid -->
+                <div class="product-info-grid">
+                    <div class="product-img-wrap" id="productImgWrap">
+                        <img id="productImg" src="" alt="Product Image" />
+                        <div class="placeholder-img" id="placeholderImg">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                    </div>
+                    <div class="product-meta">
+                        <span class="product-brand" id="productBrand">Brand Name</span>
+                        <h3 class="product-name" id="productName">Product Name</h3>
+                        <div class="product-barcode-pill">
+                            <i class="fa-solid fa-barcode"></i> <span id="displayBarcode">1234567890</span>
+                        </div>
+                        <div class="dietary-tags" id="dietaryPills">
+                            <!-- Pills for Vegan, Vegetarian, Palm Oil Free, Nutri-Score, etc. -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ingredients Breakdown Section -->
+                <div class="ingredients-section">
+                    <div class="section-title">
+                        <i class="fa-solid fa-list-check"></i>
+                        <h4>Ingredients & Animal Derivatives Analysis</h4>
+                    </div>
+                    
+                    <div class="flagged-box" id="flaggedBox" style="display: none;">
+                        <h5><i class="fa-solid fa-triangle-exclamation"></i> Identified Animal or Ambiguous Ingredients:</h5>
+                        <ul id="flaggedList"></ul>
+                    </div>
+
+                    <div class="ingredients-text-box">
+                        <p class="ingredients-raw" id="ingredientsRaw">Loading ingredients...</p>
+                    </div>
+                </div>
+
+                <!-- Nutrition & Extra Attributes -->
+                <div class="extras-grid" id="extrasGrid">
+                    <div class="extra-item">
+                        <span class="extra-label">Nutri-Score</span>
+                        <span class="extra-val" id="nutriScoreVal">-</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-label">Eco-Score</span>
+                        <span class="extra-val" id="ecoScoreVal">-</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-label">Nova Group</span>
+                        <span class="extra-val" id="novaGroupVal">-</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-label">Palm Oil</span>
+                        <span class="extra-val" id="palmOilVal">-</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scan History Card -->
+            <section class="history-card" id="historyCard">
+                <div class="history-header">
+                    <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Scans</h3>
+                    <button class="clear-history-btn" id="clearHistoryBtn">Clear</button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <p class="no-history-text">No scans yet. Scan a barcode above!</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Powered by Open Food Facts API • Pure HTML/CSS/JS</p>
+            <p class="disclaimer">Note: Always double-check packaging labels for critical dietary allergies.</p>
+        </footer>
+    </div>
+
+    <!-- App Logic -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1028 @@
+/* ==========================================================================
+   VegCheck - Modern Glassmorphism & Vibrant Theme Styles
+   ========================================================================== */
+
+:root {
+    --bg-primary: #0b1511;
+    --bg-secondary: #13221c;
+    --bg-card: rgba(23, 40, 33, 0.7);
+    --bg-card-border: rgba(56, 161, 105, 0.2);
+    --text-primary: #f0fdf4;
+    --text-secondary: #9cb6a8;
+    --text-muted: #658172;
+
+    --brand-green: #10b981;
+    --brand-green-glow: rgba(16, 185, 129, 0.35);
+    --brand-dark-green: #064e3b;
+
+    --color-vegan: #10b981;
+    --color-vegan-bg: rgba(16, 185, 129, 0.15);
+    --color-veg: #22c55e;
+    --color-veg-bg: rgba(34, 197, 94, 0.15);
+    --color-egg: #f59e0b;
+    --color-egg-bg: rgba(245, 158, 11, 0.15);
+    --color-nonveg: #ef4444;
+    --color-nonveg-bg: rgba(239, 68, 68, 0.15);
+    --color-unknown: #8b5cf6;
+    --color-unknown-bg: rgba(139, 92, 246, 0.15);
+
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 8px;
+    --shadow-subtle: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 25px rgba(16, 185, 129, 0.25);
+    --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+    --ambient-grad-1: rgba(16, 185, 129, 0.12);
+    --ambient-grad-2: rgba(6, 78, 59, 0.2);
+}
+
+/* Subtle Dynamic Ambient Page Gradients matching dietary status */
+body.theme-vegan {
+    --ambient-grad-1: rgba(16, 185, 129, 0.15);
+    --ambient-grad-2: rgba(6, 78, 59, 0.24);
+}
+
+body.theme-vegetarian {
+    --ambient-grad-1: rgba(34, 197, 94, 0.15);
+    --ambient-grad-2: rgba(20, 83, 45, 0.22);
+}
+
+body.theme-eggetarian {
+    --ambient-grad-1: rgba(245, 158, 11, 0.13);
+    --ambient-grad-2: rgba(120, 53, 15, 0.22);
+}
+
+body.theme-non-vegetarian {
+    --ambient-grad-1: rgba(239, 68, 68, 0.13);
+    --ambient-grad-2: rgba(127, 29, 29, 0.22);
+}
+
+body.theme-unknown {
+    --ambient-grad-1: rgba(139, 92, 246, 0.13);
+    --ambient-grad-2: rgba(76, 29, 149, 0.22);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-primary);
+    background-image:
+        radial-gradient(at 0% 0%, var(--ambient-grad-1, rgba(16, 185, 129, 0.12)) 0px, transparent 55%),
+        radial-gradient(at 100% 100%, var(--ambient-grad-2, rgba(6, 78, 59, 0.2)) 0px, transparent 55%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 24px 16px 40px;
+    line-height: 1.5;
+    transition: background 0.6s ease;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Main Content Spacing */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Header */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 4px;
+}
+
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 46px;
+    height: 46px;
+    background: linear-gradient(135deg, var(--brand-green), #059669);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: #fff;
+    box-shadow: var(--shadow-glow);
+}
+
+.app-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+}
+
+.app-title span {
+    color: var(--brand-green);
+}
+
+.app-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.back-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.back-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Main Cards Base */
+.scanner-card,
+.result-card,
+.status-card,
+.history-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--bg-card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-subtle);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Tabs */
+.tabs-header {
+    display: flex;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 6px;
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 10px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.tab-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.tab-btn.active {
+    background: var(--brand-green);
+    color: #064e3b;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Camera Wrapper */
+.camera-wrapper {
+    width: 100%;
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #000;
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#camera-reader {
+    width: 100% !important;
+    border: none !important;
+}
+
+#camera-reader video {
+    width: 100% !important;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+}
+
+/* Camera Reticle & Laser */
+.camera-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.reticle {
+    width: 220px;
+    height: 140px;
+    position: relative;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+}
+
+.corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: var(--brand-green);
+    border-style: solid;
+}
+
+.corner.tl {
+    top: -2px;
+    left: -2px;
+    border-width: 3px 0 0 3px;
+    border-top-left-radius: 6px;
+}
+
+.corner.tr {
+    top: -2px;
+    right: -2px;
+    border-width: 3px 3px 0 0;
+    border-top-right-radius: 6px;
+}
+
+.corner.bl {
+    bottom: -2px;
+    left: -2px;
+    border-width: 0 0 3px 3px;
+    border-bottom-left-radius: 6px;
+}
+
+.corner.br {
+    bottom: -2px;
+    right: -2px;
+    border-width: 0 3px 3px 0;
+    border-bottom-right-radius: 6px;
+}
+
+.scan-laser {
+    position: absolute;
+    width: 210px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #10b981, #34d399, transparent);
+    box-shadow: 0 0 8px #10b981;
+    animation: laserScan 2s infinite ease-in-out;
+}
+
+@keyframes laserScan {
+    0% {
+        transform: translateY(-60px);
+        opacity: 0.2;
+    }
+
+    50% {
+        transform: translateY(60px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-60px);
+        opacity: 0.2;
+    }
+}
+
+.overlay-text {
+    margin-top: 18px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 4px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+}
+
+.camera-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+/* Dropzone */
+.upload-dropzone {
+    border: 2px dashed rgba(56, 161, 105, 0.35);
+    border-radius: var(--radius-md);
+    padding: 36px 16px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.15);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.upload-dropzone.dragover {
+    border-color: var(--brand-green);
+    background: rgba(16, 185, 129, 0.08);
+}
+
+.drop-icon {
+    font-size: 2.5rem;
+    color: var(--brand-green);
+    margin-bottom: 4px;
+}
+
+.upload-dropzone h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.upload-dropzone p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.file-btn {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.file-btn input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+/* Manual Search Form */
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input-wrap {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-wrap i {
+    position: absolute;
+    left: 14px;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.search-input-wrap input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 12px 14px 12px 42px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.search-input-wrap input:focus {
+    border-color: var(--brand-green);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.quick-samples {
+    margin-top: 16px;
+}
+
+.quick-samples span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sample-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.chip:hover {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: var(--brand-green);
+    color: #fff;
+}
+
+/* Common Buttons */
+.btn {
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--brand-green), #059669);
+    color: #042f22;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.btn-icon {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.btn-icon:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+/* Status Cards (Loading & Error) */
+.status-card {
+    text-align: center;
+    padding: 36px 20px;
+}
+
+.loader-spinner {
+    width: 46px;
+    height: 46px;
+    border: 4px solid rgba(16, 185, 129, 0.15);
+    border-top-color: var(--brand-green);
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.error-icon {
+    font-size: 2.8rem;
+    color: #ef4444;
+    margin-bottom: 12px;
+}
+
+.error-actions {
+    margin-top: 16px;
+}
+
+/* ==========================================================================
+   Product Result Card Details
+   ========================================================================== */
+.result-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Verdict Banner */
+.verdict-banner {
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: var(--transition);
+}
+
+.verdict-banner.vegan {
+    background: var(--color-vegan-bg);
+    border: 1.5px solid var(--color-vegan);
+}
+
+.verdict-banner.vegetarian {
+    background: var(--color-veg-bg);
+    border: 1.5px solid var(--color-veg);
+}
+
+.verdict-banner.eggetarian {
+    background: var(--color-egg-bg);
+    border: 1.5px solid var(--color-egg);
+}
+
+.verdict-banner.non-vegetarian {
+    background: var(--color-nonveg-bg);
+    border: 1.5px solid var(--color-nonveg);
+}
+
+.verdict-banner.unknown {
+    background: var(--color-unknown-bg);
+    border: 1.5px solid var(--color-unknown);
+}
+
+/* Indian Vegetarian / Non-Vegetarian Dot Symbol */
+.indian-badge {
+    width: 44px;
+    height: 44px;
+    border: 3px solid currentColor;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.indian-badge.veg {
+    color: #22c55e;
+}
+
+.indian-badge.veg .dot {
+    width: 20px;
+    height: 20px;
+    background-color: #22c55e;
+    border-radius: 50%;
+}
+
+.indian-badge.nonveg {
+    color: #ef4444;
+}
+
+.indian-badge.nonveg .dot {
+    width: 0;
+    height: 0;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-bottom: 20px solid #ef4444;
+}
+
+.indian-badge.egg {
+    color: #f59e0b;
+}
+
+.indian-badge.egg .dot {
+    width: 20px;
+    height: 20px;
+    background-color: #f59e0b;
+    border-radius: 50%;
+}
+
+.indian-badge.vegan-icon {
+    color: #10b981;
+    font-size: 1.5rem;
+}
+
+.verdict-tag {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+}
+
+.verdict-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.verdict-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* Product Info Grid */
+.product-info-grid {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 16px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 14px;
+    border-radius: var(--radius-md);
+}
+
+.product-img-wrap {
+    width: 110px;
+    height: 110px;
+    border-radius: 12px;
+    background: #000;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #ffffff;
+}
+
+.placeholder-img {
+    font-size: 2.2rem;
+    color: var(--text-muted);
+}
+
+.product-brand {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--brand-green);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.product-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 2px 0 6px;
+    line-height: 1.3;
+}
+
+.product-barcode-pill {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.dietary-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Flagged Ingredients */
+.ingredients-section {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-md);
+    padding: 16px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.section-title i {
+    color: var(--brand-green);
+}
+
+.flagged-box {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.flagged-box h5 {
+    color: #fca5a5;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.flagged-box ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.flagged-item {
+    background: rgba(239, 68, 68, 0.25);
+    color: #fee2e2;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.ingredients-text-box {
+    background: rgba(0, 0, 0, 0.25);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    max-height: 140px;
+    overflow-y: auto;
+}
+
+.ingredients-raw {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.ingredients-raw mark.flagged {
+    background: rgba(239, 68, 68, 0.4);
+    color: #fff;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.ingredients-raw mark.dairy {
+    background: rgba(245, 158, 11, 0.4);
+    color: #fff;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+/* Extras Grid */
+.extras-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.extra-item {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.extra-label {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.extra-val {
+    display: block;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+/* Scan History Card */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.history-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.clear-history-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.clear-history-btn:hover {
+    color: #ef4444;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.no-history-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 12px 0;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.history-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(3px);
+}
+
+.history-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.history-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.history-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.history-brand {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.history-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+/* Footer */
+.app-footer {
+    text-align: center;
+    padding-top: 8px;
+}
+
+.app-footer p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.app-footer .disclaimer {
+    font-size: 0.72rem;
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 540px) {
+    .product-info-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .product-img-wrap {
+        margin: 0 auto;
+    }
+
+    .dietary-tags {
+        justify-content: center;
+    }
+
+    .extras-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
