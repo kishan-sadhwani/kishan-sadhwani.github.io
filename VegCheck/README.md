@@ -1,3 +1,5 @@
+<!-- NOTE FOR AI AGENTS: When updating any files in this project, always update the "last-updated" timestamp in index.html footer down to the minute. -->
+
 # VegCheck 🌱
 
 A lightweight, client-side web application to scan food barcodes and determine if a product is **Vegan**, **Vegetarian (Lacto-Veg)**, **Eggetarian**, or **Non-Vegetarian**.

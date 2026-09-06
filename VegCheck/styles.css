@@ -1022,6 +1022,18 @@ body {
     color: rgba(255, 255, 255, 0.3);
 }
 
+.app-footer .last-updated {
+    font-size: 0.7rem;
+    margin-top: 6px;
+    color: var(--text-muted);
+    opacity: 0.65;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+
 /* Mobile Responsiveness */
 @media (max-width: 540px) {
     .product-info-grid {

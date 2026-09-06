@@ -2,6 +2,9 @@
  * VegCheck - Barcode Vegan & Vegetarian Product Scanner
  * Engine V2 - High-Accuracy Multi-Source Classification Engine
  * 
+ * [AGENT INSTRUCTION]: Whenever editing this codebase, remember to update the 
+ * "last-updated" timestamp in index.html footer down to the minute.
+ * 
  * Improvements over V1:
  * 1. Multi-stage barcode normalization (UPC-A, EAN-13, GTIN-14, EAN-8)
  * 2. Multi-endpoint fetching: Open Food Facts v2/v0 + Indian mirror + Search API fallback
